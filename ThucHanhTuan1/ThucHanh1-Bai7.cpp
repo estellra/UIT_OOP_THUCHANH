@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-class HocSinh
+class HocSinh//khai bao class hoc sinh voi cac getter de cac ham ngoai co the tuong tac duoc
 {
     private:
     string Ten;
@@ -17,7 +17,7 @@ class HocSinh
     string getTen() const {return Ten;}
     
 };
-class DanhSachHocSinh
+class DanhSachHocSinh//class danh sach hoc sinh và các hàm tính toán
 {
     private:
     vector<HocSinh> DanhSach;
@@ -34,7 +34,7 @@ class DanhSachHocSinh
     vector<HocSinh> getDanhSach() const {return DanhSach;}
 
 };
-istream& operator>>(istream&is,HocSinh&a)
+istream& operator>>(istream&is,HocSinh&a)//nạp chồng toán tử để nhập vào thông tin học sinh
 {
     cout<<"Nhap vao ten cua hoc sinh: ";
     nhaplai:
@@ -90,7 +90,7 @@ istream& operator>>(istream&is,DanhSachHocSinh&a)
         }
         return is;
 }
-void DanhSachHocSinh::TinhDTB(DanhSachHocSinh&a)
+void DanhSachHocSinh::TinhDTB(DanhSachHocSinh&a)//tính đtb của học sinh
 {
     for(int i=0;i<a.n;i++)
         {
@@ -98,7 +98,7 @@ void DanhSachHocSinh::TinhDTB(DanhSachHocSinh&a)
             a.DanhSach[i].setDTB(dtb);
         }
 }
-void DanhSachHocSinh::SapXepDTB(DanhSachHocSinh&a)
+void DanhSachHocSinh::SapXepDTB(DanhSachHocSinh&a)//sắp xếp danh sách học sinh dựa vào đtb
 {
     sort(a.DanhSach.begin(), a.DanhSach.end(), [](const HocSinh &hs1, const HocSinh &hs2)
      {
@@ -108,13 +108,13 @@ void DanhSachHocSinh::SapXepDTB(DanhSachHocSinh&a)
 
 }
 
-string DanhSachHocSinh::chuyendoi(const string&str)
+string DanhSachHocSinh::chuyendoi(const string&str)//chuyển đổi chuỗi chữ  về chữ thường hết
 {
     string t = str;
     transform(t.begin(), t.end(), t.begin(), ::tolower);
     return t;
 }
-int DanhSachHocSinh::TimKiemHocSinh(const string &cantim)
+int DanhSachHocSinh::TimKiemHocSinh(const string &cantim)//tìm kiếm học sinh dựa vào tên có trước đã được chueyẻn về dạng ký tự thường hết
 {
     bool ktra = 0;
     string tucantim = chuyendoi(cantim); 
@@ -131,7 +131,7 @@ int DanhSachHocSinh::TimKiemHocSinh(const string &cantim)
 
     return -1;
 }
-void DanhSachHocSinh::TimDiemToanThapNhat(const DanhSachHocSinh&a)
+void DanhSachHocSinh::TimDiemToanThapNhat(const DanhSachHocSinh&a)//tìm học sinh có điểm toán thấp nhất
 {
     int min=a.DanhSach[0].getToan();
     int t;
@@ -145,7 +145,7 @@ void DanhSachHocSinh::TimDiemToanThapNhat(const DanhSachHocSinh&a)
         }
     cout<<"Hoc sinh voi so diem mon toan thap nhat la:  "<<a.DanhSach[t].getTen()<<". Diem toan: "<<a.DanhSach[t].getToan()<<"\n";
 }
-void DanhSachHocSinh::TimDTBCaoNhat(const DanhSachHocSinh&a)
+void DanhSachHocSinh::TimDTBCaoNhat(const DanhSachHocSinh&a)//tìm học sinh có đtb cao nhất
 {
     int max=a.DanhSach[0].getDTB();
     int t;
@@ -157,9 +157,9 @@ void DanhSachHocSinh::TimDTBCaoNhat(const DanhSachHocSinh&a)
                 t=i;
             }
         }
-    cout<<"Hoc sinh voi so diem trung binh cao nhat la:  "<<a.DanhSach[t].getTen()<<". Diem toan: "<<a.DanhSach[t].getDTB()<<"\n";
+    cout<<"Hoc sinh voi so diem trung binh cao nhat la:  "<<a.DanhSach[t].getTen()<<". Diem trung binh: "<<a.DanhSach[t].getDTB()<<"\n";
 }
-void DanhSachHocSinh::PhanLoaiHocSinh(const DanhSachHocSinh &a)
+void DanhSachHocSinh::PhanLoaiHocSinh(const DanhSachHocSinh &a)// phân loại học sinh dựa vào đtb
 {
     for(int i=0; i<a.n;i++)
         {
@@ -197,7 +197,7 @@ int main()
     cout<<"Nhan 4 de tinh diem trung binh va phan loai tat ca hoc sinh.\n";
     a.TinhDTB(a);
     cin>>chucnang;
-    switch(chucnang)
+    switch(chucnang)//chức năng tương ứng với từng số nguyên
     {
         case 1:
         {
