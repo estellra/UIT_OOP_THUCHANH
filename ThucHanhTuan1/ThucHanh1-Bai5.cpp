@@ -2,7 +2,7 @@
 
 using namespace std;
 
-class date
+class date// khai báo class ngày
 {
     private:
     int Ngay,Thang,Nam;
@@ -13,7 +13,7 @@ class date
     friend istream& operator>>(istream&, date&);
     friend ostream& operator<<(ostream&, const date&);
 };
-istream& operator>>(istream &is, date &a)
+istream& operator>>(istream &is, date &a)//nạp chồng toán tử để nhập vào thẳng ngày, dồng thời xét các đk, nếu sai sẽ bắt nhập lại
 {
     cout<<"Nhap vao Ngay/Thang/Nam: ";
     is>>a.Ngay>>a.Thang>>a.Nam;
@@ -96,12 +96,12 @@ istream& operator>>(istream &is, date &a)
     return is;
 }
 
-ostream& operator<<(ostream&os,const date&a)
+ostream& operator<<(ostream&os,const date&a)//nạp chồng toán tử xuất
 {
     os<<a.Ngay<<"/"<<a.Thang<<"/"<<a.Nam<<".\n";
     return os;
 }
-date& date::NgayTruoc()
+date& date::NgayTruoc()//hàm tính ngày trước, nếu là ngày 1 thì sẽ lui về 1 tháng và ngày =31
 {
     bool check=0;
     if(this->Nam%4==0&&this->Nam%100!=0) check=1;
@@ -155,7 +155,7 @@ date& date::NgayTruoc()
         }
         return *this;
 }
-date& date::NgaySau()
+date& date::NgaySau()//tính ngày sau, nếu là ngày 31 tháng sẽ tăng lên 1 và ngày =1
 {
     bool check=0;
     if(this->Nam%4==0&&this->Nam%100!=0) check=1;
@@ -205,7 +205,7 @@ date& date::NgaySau()
         }
     return *this;
 }
-int date::TinhThu()
+int date::TinhThu()//tính xem thứ mấy qua việc dùng thuật toán zeller
 {
     if(this->Thang ==2) 
     {
