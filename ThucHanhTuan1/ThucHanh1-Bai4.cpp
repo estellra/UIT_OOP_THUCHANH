@@ -10,6 +10,7 @@ public:
     void Nhap();   // Hàm nhập dữ liệu
     double GiaiThua(int n);  // Tính giai thừa
     double SinX();  // Hàm tính sin(x)
+    double getX() const {return x;}
 };
 
 void TinhToan::Nhap() {
@@ -43,6 +44,6 @@ double TinhToan::SinX() {
 int main() {
     TinhToan tt;
     tt.Nhap();
-    cout << "Sin(" << tt.SinX() << ") = " << tt.SinX() << endl;
+    cout << "Sin(" << tt.getX() << ") = " << tt.SinX() << endl;
     return 0;
 }
