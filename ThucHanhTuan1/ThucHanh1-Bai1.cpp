@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class PhanSo
+class PhanSo//class phân số
 {
     private:
     int Tu,Mau;
@@ -13,7 +13,7 @@ class PhanSo
 };
 
 
-istream& operator>>(istream &is, PhanSo &ps)
+istream& operator>>(istream &is, PhanSo &ps)//nạp chồng toán tử để input ngày phân số
     {
         cout<<"Nhap vao tu so: ";
         is>>ps.Tu;
@@ -27,9 +27,9 @@ istream& operator>>(istream &is, PhanSo &ps)
     }
 
 
-ostream& operator<<(ostream &os,  PhanSo &ps)
+ostream& operator<<(ostream &os,  PhanSo &ps)//nạp chồng toán tử để xuất thẳng kết quả
     {
-        ps.rutgon();
+        ps.rutgon();//rút gọn trước khi output
         if(ps.Mau<-1)
         {
             os<<ps.Tu*-1<<"/"<<ps.Mau*-1;
@@ -58,7 +58,7 @@ ostream& operator<<(ostream &os,  PhanSo &ps)
     }
 
 
-int PhanSo::ucln(int a, int b)
+int PhanSo::ucln(int a, int b)//tìm ước chung lớn nhất để rút gọn
 {
     if(a==0||b==0) return 0;
     if(a>b) 
@@ -75,7 +75,7 @@ int PhanSo::ucln(int a, int b)
 }
 
 
-PhanSo& PhanSo::rutgon()
+PhanSo& PhanSo::rutgon()//rút gọn ps
 {
     int t=ucln(abs(this->Tu),abs(this->Mau));
     if(t!=0)
