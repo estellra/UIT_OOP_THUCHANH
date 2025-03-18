@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cctype>  
 using namespace std;
-class SoTietKiem 
+class SoTietKiem //class sổ tiết kiệm chứa các thông tin của sổ tiết kiệm và các getter để các hàm ngoài class có thể tiếp cận
 {
 private:
     string maso;
@@ -16,7 +16,7 @@ private:
     double laisuat;
 public:
     SoTietKiem() {};
-    bool kiemtrangay(int ng, int t, int n) 
+    bool kiemtrangay(int ng, int t, int n) //kiểm tra ngày có hợp lệ không
     {
         if (n<0||n>2025) return 0;
         int Thang[12]={31,28,31,30,31,30,31,31,30,31,30,31};
@@ -24,7 +24,7 @@ public:
         return (t>=1&&t<=12&&ng>=1&&ng<=Thang[t-1]);
     }
 
-    bool kiemtracmnd(const string &cmnd) 
+    bool kiemtracmnd(const string &cmnd) //kiểm tra xem cmnd có phải toàn là số không
     {
         if(cmnd.length()==9||cmnd.length()==12)
             {
@@ -36,7 +36,7 @@ public:
         else return 0;
         return 1;
     }
-    bool kthoten(const string&a) 
+    bool kthoten(const string&a) //kiểm tra họ tên có phải toàn là chữ không
     {
         if (a.length()>30) return 0;
         for (char b:a) {
@@ -45,7 +45,7 @@ public:
         return 1;
     }
 
-    void input() 
+    void input() //nhập vào các thông tin của sổ tiết kiệm
     {
         do 
         {
@@ -96,7 +96,7 @@ public:
         }while(laisuat<=0);
     }
 
-    void hienThiThongTin() const 
+    void hienThiThongTin() const // làm đẹp output hiển thị các đề mục
     {
         cout<<left<<setw(8)<<maso
              << setw(12) << loaitietkiem
@@ -107,7 +107,7 @@ public:
             << laisuat << "%\n";
     }
 
-    string getCMND() const { return cmnd; }
+    string getCMND() const { return cmnd; }// các gettter
     string getMaSo() const { return maso; }
     string getHoTen() const {return hoten;}
     int getNgay() const { return ngay; }
@@ -135,7 +135,7 @@ public:
         return sotiengui * (laisuat / 100.0) * (sothanggui / 12.0);
     }
     
-    void ruttien(double sotien) 
+    void ruttien(double sotien) //hàm rút tiền nhờ vào việc kiểm tra số dư tài khoản với số tiền định rút
     {
         time_t t = time(0);
         tm *now = localtime(&t);
@@ -174,12 +174,13 @@ public:
     
 };
 
-class DanhSachSoTietKiem 
+class DanhSachSoTietKiem //class danh sách sổ tiết kiệm và các hàm tính
 {
 private:
     vector<SoTietKiem> DanhSach;
 public:
-    void input() {
+    void input()//hàm để nhập vào các sổ tiết kiệm
+     {
         int n;
         cout << "Nhap so luong so tiet kiem: ";
         cin >> n;
@@ -191,7 +192,8 @@ public:
         }
     }
 
-    void OutputDanhSach() const {
+    void OutputDanhSach() //output ra danh sách các sổ
+    const {
         cout << left << setw(8) << "Ma So"
              << setw(12) << "Loai TK"
              << setw(15) << "Ho Ten"
@@ -203,7 +205,8 @@ public:
             stk.hienThiThongTin();
         }
     }
-    void OutputDanhSachLaiSuat() const {
+    void OutputDanhSachLaiSuat() //làm đẹp output
+    const {
         cout << left << setw(8) << "Ma So"
              << setw(12) << "Loai TK"
              << setw(15) << "Ho Ten"
@@ -224,7 +227,7 @@ public:
         }
     }
     
-
+//tìm kiếm sổ tiết kiệm theo cmnd thông qua việc so sánh 2 chuỗi ký tự
     void TimKiemTheoCMND(const string &cmnd) const {
         bool found = false;
         for (const auto &stk : DanhSach) {
@@ -235,7 +238,7 @@ public:
         }
         if (!found) cout << "Khong tim thay so tiet kiem voi CMND: " << cmnd <<"\n";
     }
-
+//tìm kiếm sổ tiết kiệm ttheo mã sỗ thông qua so sánh 2 chuỗi ký tự
     void TimKiemTheoMaSo(const string &maso) const {
         bool found = false;
         for (const auto &stk : DanhSach) {
@@ -246,6 +249,7 @@ public:
         }
         if (!found) cout << "Khong tim thay so tiet kiem voi ma so: " << maso << "\n";
     }
+//rút tiền từ sổ tiết kiệm ứng với mã số tài khoản
     void RutTienTheoMaSo() {
         string ms;
         double sotien;
@@ -264,13 +268,13 @@ public:
         cout << "Khong tim thay so tiet kiem voi ma so: " <<ms<<"\n";
     }
     
-
+//sắp xếp các sổ theo số dư
     void SapXepTheoSoTien() {
         sort(DanhSach.begin(), DanhSach.end(), [](const SoTietKiem &a, const SoTietKiem &b) {
             return a.getSoTienGui() > b.getSoTienGui();
         });
     }
-
+//sắp xếp các sổ theo ngày mở sổ
     void SapXepTheoNgayMo() {
         sort(DanhSach.begin(), DanhSach.end(), [](const SoTietKiem &a, const SoTietKiem &b) {
             if (a.getNam() != b.getNam()) return a.getNam() < b.getNam();
@@ -278,7 +282,7 @@ public:
             return a.getNgay() < b.getNgay();
         });
     }
-    
+    //tìm kiếm các sổ mở sau một ngày nào đó thông qua so sánh ngày
     void CacSoMoSauNgay() {
         int ng,t,n;
         cout << "Nhap ngay(ngay/thang/nam): \n";
@@ -312,16 +316,16 @@ int main() {
     cout<<"Chon 5 de sap xep danh sach so tiet kiem theo thu tu tien gui giam dan.\n";
     cout<<"Chon 6 de sap xep danh sach so tiet kiem theo thu tu ngay mo so tang dan.\n";
     cin>>choice;
-    switch(choice)
+    switch(choice)//lựa chọn chức năng
     {
         case 1:
         {
-            ds.OutputDanhSachLaiSuat();
+            ds.OutputDanhSachLaiSuat();//xuất ra danh sách các sổ tiết kiệm cùng với số tiền lãi
             break;
         }
         case 2:
         {
-            ds.RutTienTheoMaSo();
+            ds.RutTienTheoMaSo();//rút tiền theo mã sổ nhập vào
             break;
         }
         case 3:
@@ -337,7 +341,7 @@ int main() {
                         string ms;
                         cin.ignore();
                         getline(cin,ms);
-                        ds.TimKiemTheoMaSo(ms);
+                        ds.TimKiemTheoMaSo(ms); //tìm kiếm sổ tiết kiệm theo mã sổ
                         break;
                     }
                     case 2:
@@ -346,24 +350,25 @@ int main() {
                         string cmnd;
                         cin.ignore();
                         getline(cin,cmnd);
-                        ds.TimKiemTheoCMND(cmnd);
+                        ds.TimKiemTheoCMND(cmnd);//tìm kiếm sổ tiết kiệm theo cmnd
                     }
                 }
+                break;
         }
         case 4:
         {
-            ds.CacSoMoSauNgay();
+            ds.CacSoMoSauNgay();//tìm kiếm danh sách các sổ mở sau một ngày nào đó
             break;
         }
         case 5:
         {
-            ds.SapXepTheoSoTien();
+            ds.SapXepTheoSoTien();//sắp xếp các sổ theo số dư tài khoản
             ds.OutputDanhSach();
             break;
         }
         case 6:
         {
-            ds.SapXepTheoNgayMo();
+            ds.SapXepTheoNgayMo();//sắp xếp các sổ theo ngày mở sổ
             ds.OutputDanhSach();
         }
     }
