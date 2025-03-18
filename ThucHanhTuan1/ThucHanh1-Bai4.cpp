@@ -1,68 +1,48 @@
 #include <iostream>
+#include <cmath>
+
 using namespace std;
-class tinhtoan
-{
-    private:
-    double x;
-    int n;
-    public:
-    friend double GiaiThua(const int&);
-    friend double SoMu(const double&, const int& );
-    double TinhSin();
-    friend istream& operator>>(istream&, tinhtoan&);
-    friend ostream& operator<<(ostream&, tinhtoan&);
 
+class TinhToan {
+private:
+    double x; // Giá trị x (độ)
+public:
+    void Nhap();   // Hàm nhập dữ liệu
+    double GiaiThua(int n);  // Tính giai thừa
+    double SinX();  // Hàm tính sin(x)
 };
-istream& operator>>(istream &is, tinhtoan &a)
-{
-    cout<<"Nhap vao gia tri X can tinh cua sin(X): \n";
-    is>>a.x;
-    cout<<"Nhap vao muc do chinh xac n cua gia tri sin(X): (n>=0)\n";
-    is>>a.n;
-    return is;
-}
-ostream& operator<<(ostream&os,  tinhtoan&a)
-{
-   os<<a.x;
-    return os;
+
+void TinhToan::Nhap() {
+    cout << "Nhap x (do): ";
+    cin >> x;
 }
 
-double GiaiThua(const int&n)
-{
-    double t=1;
-    for(int i=1;i<=n; i++)
-        {
-            t*=i;
-        }
-    return t;
-}
-double SoMu(const double& x, const int& n) {
+double TinhToan::GiaiThua(int n) {
     double t = 1;
-    for (int i = 0  ; i < n; i++) {
-        t *= x;
+    for (int i = 1; i <= n; i++) {
+        t *= i;
     }
     return t;
 }
-double tinhtoan::TinhSin()
-{
-    double sin=0; 
-    for(int i=0;i<=(this->n);i++)
-    {
-        if(i%2==0)
-            {
-                sin+=SoMu(this->x,2*i+1)/GiaiThua(2*i+1);
-            }
-        else
-            {
-                sin-=SoMu(this->x,2*i+1)/GiaiThua(2*i+1);
-            }
-    }
-return sin;
+
+double TinhToan::SinX() {
+    double radian = x * M_PI / 180.0; // Chuyển độ sang radian
+    double sinX = 0.0;
+    double term;
+    int n = 0;
+
+    do {
+        term = pow(-1, n) * pow(radian, 2 * n + 1) / GiaiThua(2 * n + 1);
+        sinX += term;
+        n++;
+    } while (fabs(term) >= 0.00001); // Dừng khi phần tử nhỏ hơn 0.00001
+
+    return sinX;
 }
-int main()
-{
-    tinhtoan a;
-    cin>>a;
-    double sin=a.TinhSin();
-    cout<<"gia tri cua sin("<<a<<") la "<<sin;    
+
+int main() {
+    TinhToan tt;
+    tt.Nhap();
+    cout << "Sin(" << tt.SinX() << ") = " << tt.SinX() << endl;
+    return 0;
 }
