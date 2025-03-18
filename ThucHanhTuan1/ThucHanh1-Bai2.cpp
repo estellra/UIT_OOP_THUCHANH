@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class PhanSo
+class PhanSo//khai bao class phan so va cac ham ben trong
 {
     private:
     int Tu,Mau;
@@ -14,7 +14,7 @@ class PhanSo
 };
 
 
-istream& operator>>(istream &is, PhanSo &ps)
+istream& operator>>(istream &is, PhanSo &ps)//nap chong toan tu de nhap vao phan so
     {
         cout<<"Nhap vao tu so: ";
         is>>ps.Tu;
@@ -28,7 +28,7 @@ istream& operator>>(istream &is, PhanSo &ps)
     }
 
 
-ostream& operator<<(ostream &os,  PhanSo &ps)
+ostream& operator<<(ostream &os,  PhanSo &ps)//nap chong toan tu de xuat phan so
     {
         ps.rutgon();
         if(ps.Mau<-1)
@@ -59,7 +59,7 @@ ostream& operator<<(ostream &os,  PhanSo &ps)
     }
 
 
-int PhanSo::ucln(int a, int b)
+int PhanSo::ucln(int a, int b)//tim uoc chung lon nhat de rut gon phan so
 {
     if(a==0||b==0) return 0;
     if(a>b) 
@@ -76,7 +76,7 @@ int PhanSo::ucln(int a, int b)
 }
 
 
-PhanSo& PhanSo::rutgon()
+PhanSo& PhanSo::rutgon()//rut gon phan so nho vao ucln
 {
     int t=ucln(abs(this->Tu),abs(this->Mau));
     if(t!=0)
@@ -86,7 +86,7 @@ PhanSo& PhanSo::rutgon()
         }
     return *this;
 }
-double PhanSo::SoSanh(const PhanSo&a)
+double PhanSo::SoSanh(const PhanSo&a)//so sanh 2 phan so qua viec quy dong mau
 {
     return this->Tu*a.Mau-this->Mau*a.Tu;
 }
